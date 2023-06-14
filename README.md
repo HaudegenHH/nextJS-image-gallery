@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextJS 13.4
+ 
+Demonstrating all important features and caching strategies of the new Next.js app router.\
+**Including the topics**:
 
-## Getting Started
+- the new routing system with file structure and special files (loading.tsx, error.tsx, not-found.tsx, layout.tsx, route.tsx, and page.tsx)
+- static rendering, dynamic rendering, and incremental static regeneration
+- setting up API route handlers (GET, POST, etc.) and how to use NextRequest and NextResponse in the backend
+- how to make component libraries like Bootstrap work with server components
+- and finally how to deploy the project to Vercel
 
-First, run the development server:
+## Start
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- visit the nextJS site
+  https://nextjs.org/docs
+
+- make sure you have at least node 16.8 installed
+- installing nextJS (the latest version)
+```sh
+npx create-next-app@latest
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+project name: nextjs-13.4-image-gallery\
+typescript - yes\
+ESLint - yes\
+TailwindCSS - no\
+src directory - yes\
+app router - yes\
+change import alias default: @/* - no  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Install bootstrap instead of tailwindCSS
+```sh
+npm i bootstrap react-bootstrap
+```
 
-## Learn More
+- starting the development server
+```sh
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- to use bootstrap: 
+in src/app/layout.tsx above the globals.css add the import for bootstrap:
+    
+    import 'bootstrap/dist/css/bootstrap.min.css';
