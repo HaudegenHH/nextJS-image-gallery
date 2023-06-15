@@ -121,3 +121,38 @@ npm run start
 Again: When you compile the project, the server component like hello/page.tsx was executed and then a static html page was generated.
 When you now refresh this page, you dont see the loading spinner ever more, instead you get the static page immediately.
 
+---
+
+## fetching (real) data from 
+https://api.unsplash.com/photos
+
+- first signup on
+https://unsplash.com/developers
+
+...with a free tier, whcih allows you to fetch 50 images per hour
+
+- register with Username & Password or via Facebook
+- create an application (requires a name and a description)
+- scroll down to access and secret key, copy to clipboard 
+- create a .env.local in the root folder; in nextjs you use the normal .env 
+  for common configuration and you put your secrets into the .env.local, thats why 
+  .env.local is in the .gitignore by default (you could surround the access and secret key by quotation marks but its not necessary)
+
+## type safety
+- if you look into the api section on unsplash.com and choose the get-random-photo endpoint, you see as well the JSON Response that you will get back from this api
+- and since i ve choosen to write this project in typescript, i will write a type for the response, so that i can use these values in the app in a type-save way.
+- but not all of these values will be necessary, the only values i am interested in are: the width and height, the description of the image, the username (of the user that posted the image), and the urls that contain the actual image (raw one is enough, because i will resize the image through nextjs anyway)
+- create models/unsplash-image.ts (doesnt contain html so its not a tsx!)
+- there define an interface that defines how the type should look like (for this mapping to work, the keys of the interface/type must be exactly the same as the keys from the response!)
+- as said: i want to also get the user, which is a nested object with the username in it, and has to be nested in the type as well
+
+## static rendering
+
+With these presets i now create a page, that behaves similar to the hello page. 
+
+It fetches the data at compile time and then it caches the static page until you compile the project again.
+
+- lets call this route / folder "static"
+  
+
+

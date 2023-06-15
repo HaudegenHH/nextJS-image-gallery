@@ -25,6 +25,13 @@ export default function NavBar() {
                         >
                             To Hello Page
                         </Nav.Link>
+                        <Nav.Link 
+                            as={Link} 
+                            href="/static" 
+                            active={pathName === '/static'}
+                        >
+                            Static
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
