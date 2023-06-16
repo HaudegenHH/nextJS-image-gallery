@@ -152,7 +152,26 @@ With these presets i now create a page, that behaves similar to the hello page.
 
 It fetches the data at compile time and then it caches the static page until you compile the project again.
 
-- lets call this route / folder "static"
+- created in folder "static"
+
+---
+
+Dynamic rendering
+
+- create another page, where you fetch data from the exact same endpoint, but instead of rendering and caching the page at compile time, i want to make a request every time a user opens or refreshes the page. 
+- created in folder "dynamic"
+- little trick: as you know, the folder structure defines the routes. If you put e.g. static into a subfolder, then this subfolder would be part of the url as well, but what if you want to organize the different page folders into subfolders without these subfolders effecting the url? For this you only have to put the folder name in parenthetis:\
+  app/(SSR)/static,  or: app/(SSR)/dynamic\
+  with those folders you defined the routes: /static and /dynamic 
+- its pretty much the same as the page.tsx of the static but with a special revalidate variable set to 0, which means dont cache, revalidate each time (this is the equivalent of server side props in the pages directory in older NextJS versions)
+- instead of setting revalidate for the whole page, you could also set it for a specific fetch call 
+
+- if you now build the project again (npm run build), you could see a list of static and dynamic routes in the console (the Lambda represents the dynamic rendering at runtime and the circle the static at compile time)
+
+  λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+
+  ○  (Static)  automatically rendered as static HTML (uses no initial props)
+
   
 
 

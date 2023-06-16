@@ -1,8 +1,8 @@
-import { UnsplashImage } from "@/models/unsplash-image";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Alert } from '@/components/bootstrap';
+import { UnsplashImage } from "@/models/unsplash-image";
 
 export const metadata = {
     title: 'Static fetch - NextJS Image Gallery',
