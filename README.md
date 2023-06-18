@@ -172,6 +172,18 @@ Dynamic rendering
 
   ○  (Static)  automatically rendered as static HTML (uses no initial props)
 
+---
+
+ISR - Incremental static regeneration
+
+With that approach you also cache the page statically but just for a certain time, and when you refresh the page after this time the revalidation gets triggered and you get a new response back.
+With the revalidate options discussed on the dynamic/page.tsx you already know how that:
+- either in the options object of the fetch method
+- or (if you want to revalidate the whole page instead) you take the global revalidate variable to set the time.
+
+---
+
+
   
 
 
