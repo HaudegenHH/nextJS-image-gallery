@@ -156,7 +156,7 @@ It fetches the data at compile time and then it caches the static page until you
 
 ---
 
-Dynamic rendering
+## Dynamic rendering
 
 - create another page, where you fetch data from the exact same endpoint, but instead of rendering and caching the page at compile time, i want to make a request every time a user opens or refreshes the page. 
 - created in folder "dynamic"
@@ -174,7 +174,7 @@ Dynamic rendering
 
 ---
 
-ISR - Incremental static regeneration
+## ISR - Incremental static regeneration
 
 With that approach you also cache the page statically but just for a certain time, and when you refresh the page after this time the revalidation gets triggered and you get a new response back.
 With the revalidate options discussed on the dynamic/page.tsx you already know how that:
@@ -182,6 +182,26 @@ With the revalidate options discussed on the dynamic/page.tsx you already know h
 - or (if you want to revalidate the whole page instead) you take the global revalidate variable to set the time.
 
 ---
+
+## Dynamic Urls
+
+..means that you put a variable into the url (a certain keyword, a slug, an id,..) and then you use that to fetch some data for that keyword
+
+- the url should look like: /topics/something
+where topics will always be the same and the part after the last slash is dynamic
+- in the (ignored (SSR)-Folder) you create the topics folder that represents the first part of the route
+- for the second, dynamic part you have to create a folder with square brackets: [topic] 
+..which is like the (SSR) folder not part of the url but instead replaced by the keyword
+- in the old pages directory you also used square brackets but there you put it the filename of the page. Now you put it in the folder name because in here as usual you have to create a page.tsx
+- in order to get the value out of the url, you have to add props to the page component. And as usual in typescript you create an interface for that: PageProps
+
+- you can also tell nextJS to render these pages in advance
+- lets say you want to render pages the keywords: health, fitness and coding and you want to render when you build the project
+...then you can export another function "generateStaticParams"
+(make sure the spelling is correct otherwise nextJS will not recognize this)
+- this fn can be dynamic/async if you need to fetch some data in here and its the aquivalent of "getStaticPaths" in the old pages router, but the syntax is simpler now because of the return type
+- you just have to return an array that contains the object keys 
+- or you could export another value "dynamicParams" set to false; with that only the prefetched/-rendered pages will be shown or a 404 page
 
 
   

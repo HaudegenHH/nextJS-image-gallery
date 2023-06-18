@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 export default function NavBar() {
     // const router = useRouter();
@@ -46,6 +46,23 @@ export default function NavBar() {
                         >
                             ISR
                         </Nav.Link>
+                        <NavDropdown title='Topics' id='topics-dropdown'>
+                            <NavDropdown.Item
+                              as={Link}
+                              href='/topics/health'
+                            >Health
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                              as={Link}
+                              href='/topics/fitness'
+                            >Fitness
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                              as={Link}
+                              href='/topics/coding'
+                            >Coding
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
