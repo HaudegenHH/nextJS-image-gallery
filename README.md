@@ -274,5 +274,9 @@ https://vercel.com
 Done! 
 
   
+**Note:**\
+The cool thing about deploying your nextJS project on Vercel is that 
+continous deployment is automatically set up.
+That means that whenever you make changes to the code and push it to the main branch of the github repo, then Vercel will automatically go ahead and re-deploy these changes! 
 
 
