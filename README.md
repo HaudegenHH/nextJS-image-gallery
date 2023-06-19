@@ -203,6 +203,58 @@ where topics will always be the same and the part after the last slash is dynami
 - you just have to return an array that contains the object keys 
 - or you could export another value "dynamicParams" set to false; with that only the prefetched/-rendered pages will be shown or a 404 page
 
+---
+
+## clientside fetching
+
+- you will have to set up an api route handler, a backend endpoint
+- all the data fetching so far was serverside, meaning that you executed the api requests inside server components and returned the "ready" html with the data already inside it (either dynamically when you access the page or statically when you build the project) but sometimes you will need clientside fetching, which means that you first get empty html pages and then you execute some javascript that fetches data from an api and then shows it in the ui.
+But instead of fetching serverside this happens in the browser of the user.
+This is useful if you want to fetch some data dynamically and wait for the response without blocking the UI by waiting for the page to refresh. But its not as optimal because it requires a client component which means that you send more Javascript with code to the user, and it is also not so great for SEO, becuase search engine crawlers first see this empty page.
+Nevertheless there are still some situations where you want to use clientside fetching.
+For demonstrating purpose you create a search page where you have an input field, in which you can type in a keyword and search for related images.
+
+First step: 
+
+Create another folder "(CSR)" (clientside rendering), that is not part of the url.
+ In order to execute the search clientside you will need useState() and useEffect() and this can only be used inside a client component ("use client" directive at the top).
+And again: you will need this as a wrapper for the client component "SearchPage". And its necessary in this case because i declared metadata which needs to be in a server component.
+And you could also fetch data in this server component and pass it via props to the client component. (but i want to demonstrate the client side fetching)
+- in the SearchPage you can use a bootstrap Form element which again you can directly import from bootstrap because SearchPage is already a client component anyway (so you dont have to use the trick with the re-exported version)
+  
+After setting everything up you might wonder: The problem is that you are on the frontend inside the browser with the "use client" directive, this means: you cant use the credentials, becuase they would be leaked to the browser and s.o. could find if inspecting the source code, so unless you prefix the environment variable with "NEXT_PUBLIC", they will not be exposed to the frontend.
+
+Test:\
+console.log(process.env.UNSPLASH_ACCESS_KEY) // undefined
+
+Therefore: When you fetch data client side and you need api access keys that should be kept secret, then you have to route this over your own backend server, because the backend server can execute this fetch call with the api key without exposing it to the client.
+- so either you set up your own backend server (with express for example)
+- or you use the api routes from NextJS with which you can build your backend directly in NextJS
+
+## API Routes
+
+- create an "app/api/search" folder (the url will start with "/api/search")
+- you dont have to name it that way, but its the convention, because you usually want to put your route handlers behind "/api" endpoint, those are not pages, but server endpoints that just return some JSON.
+- inside search put a route.tsx (again spelling must be the same otherwise it wont be recognized by NextJS as a route handler!)
+- here you usually define the http requests (GET, POST, PUT,...)
+- these fn could receive a Request object (which you dont need to import, because node comes with it as default)
+- getting the searchParams out of the Request
+- fetching from another endpoint this time: GET /search/photos
+- for the response make a new interface in unsplash.image.ts where you already defined an interface for the response of a single image, therefore the response for this call contains a results array of Unsplash Images
+- back to SearchPage: if you want to fetch client side you have to put it into state (so useState for the searchResults from the api route)
+- you can explicitely tell NextJS what type is expected (UnsplashImage array or null, separated by one pipe in NextJS <UnsplashImage[] | null>) 
+- then you need to track the loading state and the corresponding error state (which will be set to true if something went wrong with the fetch request and you want to show an error message instead)\
+**Note:**
+In a small project like this its ok to manage these states for the loading and the error state yourself but in production apps you should use a library like "SWR" for client side fetching which adds a lot of features like automatic caching, race condition prevention, deduplication, etc. In other words it does a lot of things that NextJS does serverside but on the client side!
+Call to endpoint: 
+- first you set the existing setSearchResults to null, so that the result list gets empty again (because instead you want to e.g. show a loading spinner)
+- also set the error (back) to false (because if there was an error for the last request and you send a new one, then you want to remove the error message)
+- also set loading to true 
+- then finally make the actual fetch request to the endpoint
+- again: this detour over your own backend route is neccessary because you cant put any api credentials into the client code. **So the actual request to the Unsplash Api has to happen on the server!**
+- dont forget to use a try catch because its an asynchronous request that can throw an error!
+- log this error to the console and in the finally block you can set the isLoading boolean back to false (to stop the loading spinner in the UI)
+
 
   
 
