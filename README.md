@@ -255,6 +255,23 @@ Call to endpoint:
 - dont forget to use a try catch because its an asynchronous request that can throw an error!
 - log this error to the console and in the finally block you can set the isLoading boolean back to false (to stop the loading spinner in the UI)
 
+---
+
+## Deploying on Vercel
+
+In order to deploy on vercel you need a github repository.
+- after pushing the whole project to this repo visit:
+https://vercel.com
+- here you want to create an account with the same github account that your project is on
+- if you already have a vercel account, which is not connected to the project, you can manage that in the "personal account settings" (update login connections)
+- go to the dashboard and add a new project
+- then all the repos on your github account should be listed and you can simply choose which one you want to host by
+- first clicking on import 
+- configure the project which means you have the possibility to set environment variables, so in our case the UNSPLASH_ACCESS_KEY (which will be encrypted)
+- and press "Deploy"
+- after less than a minute the project should be build and deployed, with a "https://[projectName].vercel.app" address.
+
+Done! 
 
   
 
